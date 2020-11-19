@@ -41,7 +41,11 @@ namespace Consumption.ViewModel
     /// 通用基类(实现CRUD/数据分页..)
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
+<<<<<<< HEAD
     public class BaseRepository<TEntity> : ObservableObject where TEntity : BaseDto, new()
+=======
+    public class BaseRepository<TEntity> : ViewModelBase where TEntity : BaseDto
+>>>>>>> parent of a5ebb50... 更新新增用户无法保存
     {
         public readonly IConsumptionRepository<TEntity> repository;
 
@@ -113,7 +117,6 @@ namespace Consumption.ViewModel
         public virtual void AddAsync()
         {
             this.CreateDeaultCommand();
-            GridModel = new TEntity();
             SelectPageIndex = 1;
         }
 
@@ -127,13 +130,17 @@ namespace Consumption.ViewModel
         {
             if (GridModel != null)
             {
-                if (await Msg.Question("确认删除当前选中行数据?"))
+                if (await Msg.Question("Confirm that the current selection is deleted??"))
                 {
                     var r = await repository.DeleteAsync(GridModel.Id);
                     if (r.StatusCode == 200)
                         await GetPageData(0);
                     else
+<<<<<<< HEAD
                         WeakReferenceMessenger.Default.Send(r.Message, "Snackbar");
+=======
+                        Messenger.Default.Send("Delete data exception.!", "Snackbar");
+>>>>>>> parent of a5ebb50... 更新新增用户无法保存
                 }
             }
         }
